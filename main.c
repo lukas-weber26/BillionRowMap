@@ -27,7 +27,7 @@ int hash(char * line) {
 	int count = 2;
 	int index = 0;
 	while (*line != '\0' && count >= 0)  {
-		index += pow(27,count)*((tolower(*line)-61)%27);
+		index += pow(27,count)*((tolower(*line)%61)%27);
 		count --;	
 		line = line+1;
 	}
@@ -39,6 +39,7 @@ void map_add(map * m, char * line, double val) {
 	int index = hash(line);
 
 	item * location = &(m->s[index]);
+	int dephth = 0;
 
 	if (location->string != 0) {
 		while (location) {
@@ -52,6 +53,8 @@ void map_add(map * m, char * line, double val) {
 			}
 
 			location = location -> next_item;	
+			//dephth ++;
+			//printf("%d\n", dephth);
 		}
 
 		location ->next_item = malloc(sizeof(item));
@@ -90,16 +93,16 @@ int main() {
 
 	while (getline(&line, &size, fd) != -1) {
 		//parse the line 
-		if (total_rows % 100 == 0) { 
-			if (total_rows !=0) {
-				end_time = (double)clock()/CLOCKS_PER_SEC;
-				total_time += end_time - start_time;
-				measurements += 1;
-				start_time = (double)clock()/CLOCKS_PER_SEC;
-			} else {
-				start_time = (double)clock()/CLOCKS_PER_SEC;
-			}
-		}
+		//if (total_rows % 100 == 0) { 
+		//	if (total_rows !=0) {
+		//		end_time = (double)clock()/CLOCKS_PER_SEC;
+		//		total_time += end_time - start_time;
+		//		measurements += 1;
+		//		start_time = (double)clock()/CLOCKS_PER_SEC;
+		//	} else {
+		//		start_time = (double)clock()/CLOCKS_PER_SEC;
+		//	}
+		//}
 
 		char * end = strchr(line,';');
 		double string_val = strtod(end+1,NULL);
@@ -112,7 +115,7 @@ int main() {
 
 		map_add(m,line,string_val);
 
-		total_rows ++;
+		//total_rows ++;
 		
 		//print logic: needed because the hash has to figure out its own string allocation 
 		//printf("%s: %f\n", line, string_val);

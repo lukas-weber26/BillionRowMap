@@ -41,7 +41,7 @@ void map_add(map * m, char * line, double val) {
 		while (location) {
 			if (strcmp(location->string, line) == 0) {
 				location ->val += val;
-				break;
+				return;
 			}
 
 			if (location ->next_item == NULL) {

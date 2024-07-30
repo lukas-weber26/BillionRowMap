@@ -82,7 +82,7 @@ void map_add(map * m, char * line, double val) {
 
 int main() {
 	map * m = create_map(10000);
-	FILE * fd = fopen("./billion_rows.txt", "r"); 
+	FILE * fd = fopen("./million_rows.txt", "r"); 
 	char * line = NULL;
 	unsigned long size;
 	double total_time;
